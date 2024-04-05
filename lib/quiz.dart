@@ -30,26 +30,39 @@ class _QuizState extends State<Quiz> {
       // activeScreen = const QuestionScreen();
 
       // MTD2
-      activeScreen = 'start-screen';
+      // activeScreen = 'start-screen';
+
+      // MTD3
+      activeScreen = 'question-screen';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Mtd3
+    Widget screenWidget = StartScreen(switchScreen);
+
+    if (activeScreen == 'question-screen') {
+      screenWidget = const QuestionScreen();
+    }
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 5, 197, 255),
-              Color.fromARGB(255, 11, 66, 150)
-            ], begin: Alignment.topLeft, end: Alignment.topRight),
-          ),
-          // child: const StartScreen(),
-          child: activeScreen == 'start-screen'
-              ? StartScreen(switchScreen)
-              : const QuestionScreen(),
-        ),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 5, 197, 255),
+                Color.fromARGB(255, 11, 66, 150)
+              ], begin: Alignment.topLeft, end: Alignment.topRight),
+            ),
+            // child: const StartScreen(),
+
+            // Mtd2
+            // child: activeScreen == 'start-screen'
+            //     ? StartScreen(switchScreen)
+            //     : const QuestionScreen(),
+
+            // Mtd3
+            child: screenWidget),
       ),
     );
   }
