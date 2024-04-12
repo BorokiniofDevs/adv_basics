@@ -1,4 +1,6 @@
+import 'package:adv_basics/data/question.dart';
 import 'package:adv_basics/question_screen.dart';
+import 'package:adv_basics/results_screen.dart';
 import 'package:adv_basics/start_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +26,7 @@ class _QuizState extends State<Quiz> {
 
   var activeScreen = 'start-screen';
 
+  List<String> selectedAnswers = [];
   void switchScreen() {
     setState(() {
       // MTD1
@@ -37,14 +40,32 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+
+    // To prevent error at the end of the question
+    if (selectedAnswers.length == questions.length) {
+      selectedAnswers = [];
+      setState(() {
+        activeScreen = 'results-screen';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Mtd3
     Widget screenWidget = StartScreen(switchScreen);
 
     if (activeScreen == 'question-screen') {
-      screenWidget = const QuestionScreen();
+      screenWidget = QuestionScreen(
+        onSelectAnswer: chooseAnswer,
+      );
     }
+    if (activeScreen == 'results-screen') {
+      screenWidget = const ResultScreen();
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
